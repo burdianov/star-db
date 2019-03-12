@@ -10,7 +10,8 @@ import "./App.css";
 
 class App extends Component {
   state = {
-    showRandomPlanet: true
+    showRandomPlanet: true,
+    selectedPerson: null
   };
 
   toggleRandomPlanet = () => {
@@ -18,6 +19,12 @@ class App extends Component {
       return {
         showRandomPlanet: !state.showRandomPlanet
       };
+    });
+  };
+
+  onPersonSelected = id => {
+    this.setState({
+      selectedPerson: id
     });
   };
 
@@ -38,10 +45,10 @@ class App extends Component {
 
         <div className="row mb2">
           <div className="col-md-6">
-            <ItemList />
+            <ItemList onItemSelected={this.onPersonSelected} />
           </div>
           <div className="col-md-6">
-            <PersonDetails />
+            <PersonDetails personId={this.state.selectedPerson} />
           </div>
         </div>
       </div>
