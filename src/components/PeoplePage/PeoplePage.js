@@ -5,21 +5,15 @@ import ItemList from "../ItemList";
 import PersonDetails from "../PersonDetails";
 import ErrorIndicator from "../ErrorIndicator";
 import SwapiService from "../../services/SwapiService";
-import Row from "../Row/Row";
+import Row from "../Row";
+import ErrorBoundary from "../ErrorBoundary";
 
 class PeoplePage extends Component {
   swapiService = new SwapiService();
 
   state = {
-    selectedPerson: 3,
-    hasError: false
+    selectedPerson: 3
   };
-
-  componentDidCatch(error, info) {
-    debugger;
-
-    this.setState({ hasError: true });
-  }
 
   onPersonSelected = id => {
     this.setState({
@@ -36,17 +30,20 @@ class PeoplePage extends Component {
       <ItemList
         onItemSelected={this.onPersonSelected}
         getData={this.swapiService.getAllPeople}
-        renderItem={({ name, gender, birthYear }) =>
-          `${name} (${gender}, ${birthYear})`
-        }
-      />
+      >
+        {i => `${i.name} (${i.birthYear})`}
+      </ItemList>
     );
 
     const personDetails = (
       <PersonDetails personId={this.state.selectedPerson} />
     );
 
-    return <Row left={itemList} right={personDetails} />;
+    return (
+      <ErrorBoundary>
+        <Row left={itemList} right={personDetails} />
+      </ErrorBoundary>
+    );
   }
 }
 
