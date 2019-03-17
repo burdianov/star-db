@@ -2,13 +2,12 @@ import React, { Component } from "react";
 
 import Header from "../Header";
 import RandomPlanet from "../RandomPlanet";
-import ItemList from "../ItemList";
 
 import ItemDetails from "../ItemDetails";
+import { Record } from "../ItemDetails/ItemDetails";
 
 import "./App.css";
 import ErrorIndicator from "../ErrorIndicator";
-import PeoplePage from "../PeoplePage";
 import SwapiService from "../../services/SwapiService";
 import Row from "../Row";
 import ErrorBoundary from "../ErrorBoundary";
@@ -49,11 +48,10 @@ class App extends Component {
     } = this.swapiService;
 
     const personDetails = (
-      <ItemDetails
-        itemId={11}
-        getData={getPerson}
-        getImageUrl={getPersonImage}
-      />
+      <ItemDetails itemId={11} getData={getPerson} getImageUrl={getPersonImage}>
+        <Record field="gender" label="Gender" />
+        <Record field="eyeColor" label="Eye Color" />
+      </ItemDetails>
     );
 
     const starshipDetails = (
